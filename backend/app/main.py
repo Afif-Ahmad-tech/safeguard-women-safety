@@ -9,13 +9,10 @@ app = FastAPI(
 )
 
 # CORS Configuration
-app.add_middleware(
+aapp.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://safeguard-women-safety-qydm-4hkk5lxb5.vercel.app",
-        "https://safeguard-women-safety-qydm.vercel.app",
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
