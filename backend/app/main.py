@@ -8,7 +8,6 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS Configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -17,20 +16,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Create database tables on startup
 @app.on_event("startup")
 async def startup():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-# API Routes
 app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
 app.include_router(sos.router, prefix="/api/sos", tags=["SOS"])
 app.include_router(incidents.router, prefix="/api/incidents", tags=["Incidents"])
 app.include_router(heatmap.router, prefix="/api/heatmap", tags=["Heatmap"])
 app.include_router(contacts.router, prefix="/api/contacts", tags=["Contacts"])
 
-# Health Check Endpoint
 @app.get("/health")
 async def health():
     return {
